@@ -4,17 +4,12 @@
 
 * Add/Pop : O(log N)  N为Heap大小
 
-* Min or Max: O(1)
+* Min or Max: O(1), Just return the top element
 
 * 用heapify构建heap: O(N)
 
 * 遍历一个heap/priority queue: O(NlogN)
 
-  
-
-Heapq / Priority Queue 的 remove操作是O(n)
-
-heapq.heapify([...])
 
 
 
@@ -29,6 +24,7 @@ heapq.heapify([...])
 现在有没有发现堆和我们曾经遇到过的优先队列具有很相似的特点，那么二者究竟有何联系呢？
 
 优先队列是一种抽象的数据类型，它和堆的关系类似于，List和数组、链表的关系一样；我们常常使用堆来实现优先队列，因此很多时候堆和优先队列都很相似，它们只是概念上的区分。
+
 优先队列的应用场景十分的广泛，常见的应用有：
 
 - Dijkstra’s algorithm（单源最短路问题中需要在邻接表中找到某一点的最短邻接边，这可以将复杂度降低。）
