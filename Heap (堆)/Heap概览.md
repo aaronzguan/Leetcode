@@ -158,17 +158,17 @@ class Heap(object):
 
 	def _heapify(self):
 		"""
-        Do heepifying starting from the bottom.
-        Time Complexity: O(N)
-        """
+		Do heepifying starting from the bottom.
+		Time Complexity: O(N)
+		"""
 		for i in range(len(self.heap) - 1, -1, -1):
 			self._siftdown(i)
 
 	def _inv_heapify(self):
 		"""
-        Do heepifying starting from the root.
-        Time Complexity: O(NlogN)
-        """
+		Do heepifying starting from the root.
+		Time Complexity: O(NlogN)
+		"""
 		for i in range(len(self.heap)):
 			self._siftup(i)
 
@@ -189,11 +189,11 @@ class Heap(object):
 			return heapMin
 
 	def add(self, element):
-		"""
-		Append the element in the heap and then do siftup for the element
-		Time Compleixty: Same as siftup - O(logN)
-		"""
-		self.heap.append(element)
+        """
+        Append the element in the heap and then do siftup for the element
+        Time Compleixty: Same as siftup - O(logN)
+        """
+        self.heap.append(element)
         idx_node = len(self.heap) - 1
         self._siftup(idx_node)
 
@@ -202,3 +202,4 @@ class Heap(object):
 			return None
 		return self.heap[0]
 ```
+
