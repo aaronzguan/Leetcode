@@ -2,13 +2,9 @@
 
 支持操作：
 
-* Add/Pop : O(log N)  N为Heap大小
-
-* Min or Max: O(1), Just return the top element
-
-* 用heapify构建heap: O(N)
-
-* 遍历一个heap/priority queue: O(NlogN)
+* **Add or Pop** : O(log N) 
+* **Min or Max:** O(1), Just return the top element
+* **用heapify构建heap:** O(N) (因为用了siftdown，时间复杂度为O(N), 如果用siftup,　时间复杂度为O(NlogN))
 
 
 
@@ -41,7 +37,7 @@
 
 ## 利用Siftup实现堆化 - 时间复杂度O(NlogN)
 
-给定一个数组A，我们的目的是要将 A 堆化，也就是让A 满足以下要求：
+给定一个数组A，我们的目的是要将 A 堆化 (Min-Heap)，也就是让A 满足以下要求：
 
 - `A[i * 2 + 1] >= A[i]`
 - `A[i * 2 + 2] >= A[i]`
@@ -57,17 +53,16 @@ class Solution:
             father = (k - 1) // 2
             if A[k] > A[father]:
                 break
-            temp = A[k]
-            A[k] = A[father]
-            A[father] = temp
+            A[father], A[k] = A[k], A[father]
             k = father
+            
     def heapify(self, A):
         for i in range(len(A)):
             self.siftup(A, i)
 ```
 
 算法思路：
-对于每个元素A[i]，比较A[i]和它的父亲结点 (A[i - 1 // 2]) 的大小，如果小于父亲结点，则与父亲结点交换。
+对于每个元素`A[i]`，比较`A[i]`和它的父亲结点 `A[i - 1 // 2]` 的大小，如果小于父亲结点，则与父亲结点交换。
 交换后再和新的父亲比较，重复上述操作，直至该点的值大于父亲。
 
 时间复杂度分析：
@@ -96,9 +91,7 @@ class Solution:
             if A[son] >= A[k]:
                 break
                 
-            temp = A[son]
-            A[son] = A[k]
-            A[k] = temp
+            A[son], A[k] = A[k], A[son]
             k = son
     
     def heapify(self, A):
@@ -106,12 +99,12 @@ class Solution:
             self.siftdown(A, i)
 ```
 
-算法思路：
+**算法思路：**
 初始选择最接近叶子的一个父结点，与其两个儿子中较小的一个比较，若大于儿子，则与儿子交换。
 交换后再与新的儿子比较并交换，直至没有儿子。
 再选择较浅深度的父亲结点，重复上述步骤。
 
-时间复杂度分析
+**时间复杂度分析**
 这个版本的算法，乍一看也是 O(nlogn)， 但是我们仔细分析一下，算法从第 n/2 个数开始，倒过来进行 siftdown。也就是说，相当于从 heap 的倒数第二层开始进行 siftdown 操作，倒数第二层的节点大约有 n/4 个， 这 n/4 个数，最多 siftdown 1次就到底了，所以这一层的时间复杂度耗费是 O(n/4)，然后倒数第三层差不多 n/8 个点，最多 siftdown 2次就到底了。所以这里的耗费是 O(n/8 * 2), 倒数第4层是 O(n/16 * 3)，倒数第5层是 O(n/32 * 4) ... 因此累加所有的时间复杂度耗费为：
 T(n) = O(n/4) + O(n/8 * 2) + O(n/16 * 3) ...
 然后我们用 2T - T 得到：
@@ -121,55 +114,91 @@ T(n) = O(n/4) + O(n/8 * 2) + O(n/16 * 3) ...
 2 * T(n) - T(n) = O(n/2) +O (n/4) + O(n/8) + ...
 = O(n/2 + n/4 + n/8 + ... )
 = O(n)
-因此得到 T(n) = 2 * T(n) - T(n) = O(n)
+因此得到 T(n) = 2 * T(n) - T(n) = **O(n)**
 
+This is due to the fact that when you use `siftDown`, the time taken by each call **decreases** with the depth of the node because these nodes are closer to the leaves. When you use `siftUp`, the number of swaps **increases** with the depth of the node because if you are at full depth, you may have to swap all the way to the root. As the number of nodes grows exponentially with the depth of the tree, using `siftUp` gives a more expensive algorithm.
 
+## Heap的实现
 
-#### 堆排序
+```python
+class Heap(object):
+	def __init__(self):
+		self.heap = heap
 
-运用堆的性质，我们可以得到一种常用的、稳定的、高效的排序算法————堆排序。堆排序的时间复杂度为O(n*log(n))，空间复杂度为O(1)，堆排序的思想是：对于含有n个元素的无序数组nums, 构建一个堆(这里是小顶堆)heap，然后执行extractMin得到最小的元素，这样执行n次得到序列就是排序好的序列。
-如果是降序排列则是小顶堆；否则利用大顶堆。
+	def _get_parent(self, idx_child):
+		idx_parent = int((idx_child - 1) // 2)
+		return idx_parent
 
-#### Trick
+	def _get_children(self, idx_parent):
+		idx_childrens = [2*idx_parent + 1, 2*idx_parent + 2]
+		return idx_childrens
 
-由于extractMin执行完毕后，最后一个元素last已经被移动到了root，因此可以将extractMin返回的元素放置于最后，这样可以得到sort in place的堆排序算法。
-当然，如果不使用前面定义的heap，则可以手动写堆排序，由于堆排序设计到建堆和extractMin， 两个操作都公共依赖于siftDown函数，因此我们只需要实现siftDown即可。(trick:由于建堆操作可以采用siftUp或者siftDown，而extractMin是需要siftDown操作，因此取公共部分，则采用siftDown建堆)
+	def _siftup(self, idx):
+		"""
+		Compare the parent node and the idx
+		If the parent node is larger, swap them and continue to do siftup
+		Time Complexity: O(logN)
+		"""
+		idx_parent = self._get_parent(idx)
+		if idx_parent > 0 and self.heap[idx_parent] > self.heap[idx]:
+			self.heap[idx_parent], self.heap[idx] = self.heap[idx], self.heap[idx_parent]
+			self._siftup(idx_parent)
 
-#### 升序堆排序（JAVA）
+	def _siftdown(self, idx):
+		"""
+		Compare the children nodes and the idx
+		If children is smaller, swap them and then continue to do siftdown
+		Time Complexity: O(logN)
+		"""
+		idx_childrens = self._get_children(idx)
+		for idx_child in idx_childrens:
+			if idx_child < len(self.heap) and self.heap[idx_child] < self.heap[idx]:
+				self.heap[idx_child], self.heap[idx] = self.heap[idx], self.heap[idx_child]
+				self._siftdown(idx_child)
 
-```java
-public class Solution {
-    private void siftdown(int[] A, int left, int right) {
-        int k = left;
-        while (k * 2 + 1 <= right) {
-            int son = k * 2 + 1;
-            if (son + 1 <= right && A[son] < A[son + 1]) {
-                son = k * 2 + 2;
-            }
-            if (A[son] <= A[k]) {
-                break;
-            }
-            int tmp = A[son];
-            A[son] = A[k];
-            A[k] = tmp;
-            k = son;
-        }
-    }
-    
-    public void heapify(int[] A) {
-        for (int i = (A.length - 1) / 2; i >= 0; i--) {
-            siftdown(A, i, A.length - 1);
-        }
-    }
-    
-    void sortIntegers(int[] A) {
-        heapify(A);
-        for (int i = A.length - 1; i > 0; i--) {
-            int tmp = A[0];
-            A[0] = A[i];
-            A[i] = tmp;
-            siftdown(A, 0, i - 1);
-        }
-    }
-}
+	def _heapify(self):
+		"""
+        Do heepifying starting from the bottom.
+        Time Complexity: O(N)
+        """
+		for i in range(len(self.heap) - 1, -1, -1):
+			self._siftdown(i)
+
+	def _inv_heapify(self):
+		"""
+        Do heepifying starting from the root.
+        Time Complexity: O(NlogN)
+        """
+		for i in range(len(self.heap)):
+			self._siftup(i)
+
+	def pop(self):
+		"""
+		Remove the smallest element from the heap
+		Firstly, swtich the head element with the last element
+		Then we can do pop to remove the last element which is the smallest
+		Then we siftdown the head element
+		Time Complexity: same as siftdown - O(logN)
+		"""
+		if len(self.heap) == 0:
+			print("Error: Heap is empty!")
+		else:
+			self.heap[0], self.heap[-1] = self.heap[-1], self.heap[0]
+			heapMin = self.heap.pop()
+			self._siftdown(0)
+			return heapMin
+
+	def add(self, element):
+		"""
+		Append the element in the heap and then do siftup for the element
+		Time Compleixty: Same as siftup - O(logN)
+		"""
+		self.heap.append(element)
+        idx_node = len(self.heap) - 1
+        self._siftup(idx_node)
+
+	def min(self):
+		if not self.heap:
+			return None
+		return self.heap[0]
 ```

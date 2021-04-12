@@ -10,7 +10,7 @@
 输出: false
 ```
 
-Topological Sort:
+### Topological Sort:
 
 **Time Complexity:** O(|E|+|V|) where |V| is the number of courses, and |E| is the number of dependencies. 
 

@@ -3,7 +3,7 @@
 We need to find a subset of edges which **connects all the nodes of the graph with the minimum possible total weight**. This is by definition the Minimum Spanning Tree or [MST](https://en.wikipedia.org/wiki/Minimum_spanning_tree) of a graph. There are two main algorithms to solve Minimum Spanning Tree problem:
 
 * **Prim's Algorithm**: It typically uses Heap
-* **Kruskal's Algorithm**：  It is implemented using the [Disjoint set](https://en.wikipedia.org/wiki/Disjoint-set_data_structure) Union-Find data structure.
+* **Kruskal's Algorithm**：  It is implemented using the [Disjoint set](https://en.wikipedia.org/wiki/Disjoint-set_data_structure) **Union-Find** data structure.
 
 
 

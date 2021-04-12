@@ -81,12 +81,15 @@ class Solution(object):
     def helper(self, nums, index, subset, result):
         result.append(subset)
         
+        used = set()
+        
         for i in range(index, len(nums)):
             # 去重操作
-            if i > 0 and i > index and nums[i] == nums[i - 1]:
+            if nums[i] in used:
                 continue
+            
+            used.add(nums[i])
                 
             self.helper(nums, i + 1, subset + [nums[i]], result)
-        
 ```
 
