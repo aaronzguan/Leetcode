@@ -2,7 +2,7 @@
 
 时间空间复杂度均为 O(|E|+|V|), E为节点的数量，V为Edge的数量
 
-**不分层：**连通块（[200. Num of Islands](../DFS/200.%20Number%20of%20islands%20(M).md)），拓扑排序
+**不分层：** 连通块（[200. Num of Islands](../DFS/200.%20Number%20of%20islands%20(M).md)），拓扑排序
 
 ```python
 def find_nodes_by_bfs(self, node):
@@ -17,7 +17,7 @@ def find_nodes_by_bfs(self, node):
     return list(visited)
 ```
 
-**分层：**最短路径（Shortest distance）
+**分层：** 最短路径（Shortest distance）
 
 * 需要多一层循环 `for _ in range(len(queue))`
 * 或者使用**distance，哈希表**记录到所有点的距离
