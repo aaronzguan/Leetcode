@@ -1,4 +1,4 @@
-## Grouping Options
+## Grouping Options (H) - Lintcode 1834
 
 Given a number of people ***n*** and a number of groups ***k***, find the distinct options to form k contiguous groups out of the *n* people while respecting the following conditions:
 
@@ -18,6 +18,8 @@ The 5 distinct options to form 4 groups with 8 people under the rules are [1, 1,
 ### 动态规划
 
 https://math.stackexchange.com/questions/1908701/integer-partition-of-n-into-k-parts-recurrence
+
+https://blog.csdn.net/roufoo/article/details/104901535
 
 If the smallest part of the partition is 1, we've added 1 to all partitions of `n - 1` into `k - 1` parts (to guarantee the smallest part is 1); and if the smallest part is not 1, we've added 1 to each of `k` parts in all partitions of `n - k` into `k` parts (guaranteeing that each part is greater than 1). Therefore, we can use dynamic programming.
 
