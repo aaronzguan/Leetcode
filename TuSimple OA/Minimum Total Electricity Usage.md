@@ -1,6 +1,6 @@
 ## Minimum Total Electricity Usage
 
-TuSimple has **N** machine to running models right now, and we know **P** greater relationship between these machines (we assume greater at minimum 1)/
+TuSimple has **N** machine to running models right now, and we know **P** greater relationship between these machines (we assume greater at minimum 1)
 
 Besides, we know the minimum usage **M** of one machine currently, could you estimate the total usage of all the machines?
 
@@ -29,39 +29,37 @@ A->B<-C<-D, 这种情况下B应该增加两次，找最长的edge
 
 ```python
 def minimum_total_usage(N, M, relationships):
+    # Write your code here
     graph = collections.defaultdict(list)
-    machine_indegree = {x: 0 for x in range(1, N + 1)}
-    for edge in relationships:
-        graph[edge[0]].append(edge[1])
-        machine_indegree[edge[1]] += 1
+    machine_indegree = {x: 0 for x in range(1, N+1)}
     
-    # 得到入度为0的机器，即不存在任何greater relationship
-    start_machine = [(m, M) for m in range(1, N + 1) if machine_indegree[m] == 0]
+    for edge in relationships:
+        if edge[1] not in graph[edge[0]]:
+            graph[edge[0]].append(edge[1])
+            machine_indegree[edge[1]] += 1
+
+    start_machine = [(m, M) for m in range(1, N+1) if machine_indegree[m] == 0]
     
     if start_machine == []:
         return -1
     
     result = 0
     nums_machine = 0
-    # 用steps来记录edge的长度
-    steps = {m: 0 for m in range(1, N + 1)}
     queue = collections.deque(start_machine)
+    
     while queue:
         machine, usage = queue.popleft()
-        result += usage
         nums_machine += 1
+        result += usage
         
         if nums_machine == N:
             return result
         
         for neighbor in graph[machine]:
-            machine_indegree[neighbor] -= 1
-            steps[neighbor] = max(steps[neighbor], steps[machine] + 1)
+            machine_indegree[neighbor] -= 1            
             if machine_indegree[neighbor] == 0:
-                queue.append((neighbor, M + steps[neighbor]))
-                
+                queue.append((neighbor, usage + 1))
+ 
     return -1
-            
-    
 ```
 

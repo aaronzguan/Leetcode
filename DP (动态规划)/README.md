@@ -28,6 +28,12 @@
 
 `dp[i]` 表示前i个字符的最值/方案数/可行性
 
+**Question List:**
+
+ [1027. Longest Arithmetic Subsequence (M).md](1027.%20Longest%20Arithmetic%20Subsequence%20(M).md) 
+
+
+
 `dp[i][j]` 表示前i个字符划分为j个部分的最值/方案数/可行性
 
 **Question LIst:**
@@ -39,6 +45,8 @@
 #### ３. 前缀型之匹配型：
 
 `dp[i][j]` 表示<u>第一个字符串的前i个字符</u> 匹配上 <u>第二个字符串的前j个字符</u> 的最值/方案数/可行性
+
+ [44. Wildcard Matching (H).md](44.%20Wildcard%20Matching%20(H).md) 
 
 #### 4. 区间型：
 
