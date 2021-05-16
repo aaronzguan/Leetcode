@@ -1,0 +1,46 @@
+## Lintcode 515 · 房屋染色
+
+这里有`n`个房子在一列直线上，现在我们需要给房屋染色，分别有红色蓝色和绿色。每个房屋染不同的颜色费用也不同，你需要设计一种染色方案使得**相邻的房屋颜色不同**，并且费用最小，返回最小的费用。
+
+费用通过一个`n`x`3` 的矩阵给出，比如`cost[0][0]`表示房屋`0`染红色的费用，`cost[1][2]`表示房屋`1`染绿色的费用，依此类推。找到油漆所有房子的最低成本。
+
+**Example**
+
+```
+输入: [[14,2,11],[11,14,5],[14,3,10]]
+输出: 10
+解释: 第一个屋子染蓝色，第二个染绿色，第三个染蓝色，最小花费：2 + 5 + 3 = 10.
+```
+
+
+
+### 动态规划：
+
+`dp[i][j]`表示用j颜色染第i个房子的最小cost
+
+```python
+class Solution:
+    """
+    @param costs: n x 3 cost matrix
+    @return: An integer, the minimum cost to paint all houses
+    """
+    def minCost(self, costs):
+        # write your code here
+        if not costs:
+            return 0
+        dp = [[float('inf')] *3 for _ in range(len(costs))]
+        
+        for j in range(3):
+            dp[0][j] = costs[0][j]
+        
+        for i in range(1, len(costs)):
+            for j in range(3):
+                if j == 0:
+                    dp[i][j] = min(dp[i-1][j+1], dp[i-1][j+2]) + costs[i][j]
+                elif j == 1:
+                    dp[i][j] = min(dp[i-1][j-1], dp[i-1][j+1]) + costs[i][j]
+                else:
+                    dp[i][j] = min(dp[i-1][j-1], dp[i-1][j-2]) + costs[i][j]
+        return min(dp[-1])
+```
+
