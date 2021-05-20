@@ -123,7 +123,7 @@ This is due to the fact that when you use `siftDown`, the time taken by each cal
 ```python
 class Heap(object):
 	def __init__(self):
-		self.heap = heap
+		self.heap = []
 
 	def _get_parent(self, idx_child):
 		idx_parent = int((idx_child - 1) // 2)
@@ -140,7 +140,7 @@ class Heap(object):
 		Time Complexity: O(logN)
 		"""
 		idx_parent = self._get_parent(idx)
-		if idx_parent > 0 and self.heap[idx_parent] > self.heap[idx]:
+		if idx_parent >= 0 and self.heap[idx_parent] > self.heap[idx]:
 			self.heap[idx_parent], self.heap[idx] = self.heap[idx], self.heap[idx_parent]
 			self._siftup(idx_parent)
 
