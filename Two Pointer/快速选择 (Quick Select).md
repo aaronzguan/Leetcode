@@ -1,4 +1,4 @@
-## Quick Select O(N) - Select the kth smallest element
+## Quick Select O(N) - Select the kth smallest element from unsorted array
 
 Quick Select使用了Quick Sort， 但是Quick Sort 时间复杂度为O(NlogN)， 由于Quick Select只考虑所寻找的目标所在的那一部分子数组，所以Quick Select平均时间复杂度为 O(N)
 
