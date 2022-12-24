@@ -23,37 +23,6 @@ Search a sorted array by repeatedly **<u>dividing</u>** the search interval **<u
 
 ```python
 def binary_search(array, target):
-    """
-    array 一定为已排好序的，
-    寻找first position of target
-    """
-    if len(array) == 0:
-        return -1
-    
-    left, right = 0, len(array) - 1
-    while left + 1 < right: # right + 1非常重要，保证不会出现死循环
-        mid = (left + right) // 2
-        # 当array[mid]为target, 左边可能还存在target,所以让right = mid来搜寻左边部分。
-        if array[mid] == target:
-            right = mid
-        # 当array[mid]小于target,证明target在右边，所以让left = mid+1来搜寻右边部分
-        elif array[mid] < target:
-            left = mid + 1
-        else:
-        	right= mid - 1
-    # left 一定比right小，所以先判断left是否为target，从而保证是first position
-    if array[left] == target:
-        return left
-   	if array[right] == target:
-        return right
-   
-	return -1
-```
-
-
-
-```python
-def binary_search(array, target):
 	"""
 	Return the index of target in the array
 	"""
@@ -69,6 +38,37 @@ def binary_search(array, target):
 			right = mid - 1
 		else:
 			left = mid + 1
+	return -1
+```
+
+
+
+```python
+def binary_search(array, target):
+    """
+    array 一定为已排好序的，
+    寻找first position of target
+    """
+    if len(array) == 0:
+        return -1
+    
+    left, right = 0, len(array) - 1
+    while left + 1 < right: # left + 1非常重要，保证不会出现死循环
+        mid = (left + right) // 2
+        # 当array[mid]为target, 左边可能还存在target,所以让right = mid来搜寻左边部分。
+        if array[mid] == target:
+            right = mid
+        # 当array[mid]小于target,证明target在右边，所以让left = mid+1来搜寻右边部分
+        elif array[mid] < target:
+            left = mid + 1
+        else:
+        	right= mid - 1
+    # left 一定比right小，所以先判断left是否为target，从而保证是first position
+    if array[left] == target:
+        return left
+   	if array[right] == target:
+        return right
+   
 	return -1
 ```
 
