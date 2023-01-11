@@ -90,6 +90,6 @@ class Solution(object):
             
             used.add(nums[i])
                 
-            self.helper(nums, i + 1, subset + [nums[i]], result)
+            self.helper(nums, i + 1, subset + [nums[i]], result) # subset + [nums[i]] 会创建一个新的list
 ```
 
