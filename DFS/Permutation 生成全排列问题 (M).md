@@ -128,7 +128,7 @@ class Solution(object):
         """
         counter = collections.Counter(s)
         odds = filter(lambda x: x % 2, counter.values())
-        # More than 1 char has odd numbeer appearance
+        # More than 1 char has odd number appearance
         if len(list(odds)) > 1:
             return []
         baseStr, mid = self.preProcess(counter)
