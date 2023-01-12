@@ -137,6 +137,7 @@ class Heap(object):
 		"""
 		Compare the parent node and the idx
 		If the parent node is larger, swap them and continue to do siftup
+		小的值放父节点上
 		Time Complexity: O(logN)
 		"""
 		idx_parent = self._get_parent(idx)
@@ -148,6 +149,7 @@ class Heap(object):
 		"""
 		Compare the children nodes and the idx
 		If children is smaller, swap them and then continue to do siftdown
+		小的放父节点上
 		Time Complexity: O(logN)
 		"""
 		idx_childrens = self._get_children(idx)
