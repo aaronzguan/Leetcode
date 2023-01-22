@@ -2,9 +2,24 @@
 
 只能选择不相邻的权重，求能所得的最大权重。
 
-## 198. House Robber (E)
+## 198. House Robber (M)
+
+You are a professional robber planning to rob houses along a street. Each house has a certain amount of money stashed, the only constraint stopping you from robbing each of them is that adjacent houses have security systems connected and **it will automatically contact the police if two adjacent houses were broken into on the same night**.
+
+Given an integer array `nums` representing the amount of money of each house, return *the maximum amount of money you can rob tonight **without alerting the police***.
 
 有array，每个元素分别表示权重，不可以同时取左右相邻的元素，求所能取得的最大权重。
+
+**Example:**
+
+```
+Input: nums = [1,2,3,1]
+Output: 4
+Explanation: Rob house 1 (money = 1) and then rob house 3 (money = 3).
+Total amount you can rob = 1 + 3 = 4.
+```
+
+### Solution - DP
 
 ```python
 class Solution(object):
@@ -47,9 +62,21 @@ class Solution(object):
 
 ## 213. House Robber II (M)
 
+You are a professional robber planning to rob houses along a street. Each house has a certain amount of money stashed. All houses at this place are **arranged in a circle.** That means the first house is the neighbor of the last one. Meanwhile, adjacent houses have a security system connected, and **it will automatically contact the police if two adjacent houses were broken into on the same night**.
+
+Given an integer array `nums` representing the amount of money of each house, return *the maximum amount of money you can rob tonight **without alerting the police***.
+
 头尾相连，增加环形数组的条件，求所能取得的最大值
 
-### 思路：
+**Example :**
+
+```
+Input: nums = [2,3,2]
+Output: 3
+Explanation: You cannot rob house 1 (money = 2) and then rob house 3 (money = 2), because they are adjacent houses.
+```
+
+### Solution - DP：
 
 * 把此环状排列房间问题约化为两个单排排列房间子问题：
 
